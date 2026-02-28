@@ -2,18 +2,158 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Zhuoyan Zhou的个人主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统操作员@ls-Super-Server :: 门户主页</title>
     <style>
-        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f9; }
-        h1 { color: #333; }
-        .content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        /* --- 核心黑客风格 CSS (硬核且轻量) --- */
+        :root {
+            --bg-color: #0c0c0c;          /* 极深背景 */
+            --main-green: #00ff41;        /* 经典黑客绿 */
+            --dim-green: #008f11;         /* 暗绿（用于非核心文本） */
+            --accent-cyan: #00bcd4;       /* 霓虹蓝（用于链接凸显） */
+            --hover-bg: #1a1a1a;          /* 悬停背景色 */
+            --font-stack: 'Fira Code', 'Courier New', Courier, monospace; /* 等宽字体族 */
+        }
+
+        body, html {
+            background-color: var(--bg-color);
+            color: var(--main-green);
+            font-family: var(--font-stack);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 防止出现滚动条破坏氛围 */
+        }
+
+        /* 终端屏幕容器 */
+        #terminal {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            padding: 20px;
+            border: 1px solid var(--dim-green);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            overflow-y: auto; /* 允许终端内内容滚动 */
+            position: relative;
+        }
+
+        /* 顶部模拟状态栏 */
+        .status-bar {
+            color: var(--dim-green);
+            font-size: 0.8rem;
+            border-bottom: 1px dashed var(--dim-green);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            user-select: none;
+        }
+
+        /* 打字机效果文本 */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+            letter-spacing: 0.1rem;
+            /* 核心打字动画 */
+            animation: typing 2.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            border-right: 2px solid var(--main-green); /* 模拟闪烁光标 */
+        }
+
+        /* 导航菜单样式 */
+        .menu-title {
+            color: var(--main-green);
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .menu-item {
+            margin-bottom: 15px;
+        }
+
+        /* 黑客风格链接样式 */
+        .hacker-link {
+            text-decoration: none;
+            color: var(--accent-cyan);
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .hacker-link:hover {
+            color: var(--bg-color);
+            background-color: var(--main-green); /* 反色效果 */
+            border: 1px solid var(--main-green);
+            box-shadow: 0 0 10px var(--main-green);
+        }
+
+        .menu-item::before {
+            content: "[模块]";
+            color: var(--dim-green);
+            margin-right: 10px;
+        }
+
+        /* 动画定义 */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--main-green) }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            #terminal { width: 95%; height: 90vh; padding: 10px; }
+            .hacker-link { font-size: 0.95rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="content">
-        <h1>欢迎来到我的数字世界</h1>
-        <p>基础建设中：从零开始的全栈之路。</p>
-        <p>未来计划：展示自动化脚本与科学计算可视化数据。</p>
+
+    <div id="terminal">
+        <div class="status-bar">
+            [系统操作员@ls-超算中心] :: 上线时间: 28 Days, 14 Hours :: 安全等级: 零信任 (ZERO_TRUST)
+        </div>
+
+        <h1 class="typing-text">> 连接已建立... 欢迎来到我的数字基地.</h1>
+
+        <p style="color: var(--dim-green); margin-top: 10px;">> 正在载入主导航菜单...</p>
+
+        <div class="menu-title">> 请选择访问模块：</div>
+
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="#resume" class="hacker-link">[01] - 人员档案 (简历)</a>
+            </li>
+            <li class="menu-item">
+                <a href="#research" class="hacker-link">[02] - 科研项目数据库 (科研)</a>
+            </li>
+            <li class="menu-item">
+                <a href="#lab_group" class="hacker-link">[03] - 导师课题组门户</a>
+            </li>
+            <li class="menu-item">
+                <a href="#publications" class="hacker-link">[04] - 学术论文与手稿</a>
+            </li>
+            <li class="menu-item">
+                <a href="#data_viz" class="hacker-link">[05] - MATLAB/Python 数据可视化存档</a>
+            </li>
+            </ul>
+
+        <p style="color: var(--dim-green); margin-top: 50px;">> 等待指令_</p>
     </div>
+
 </body>
 </html>
