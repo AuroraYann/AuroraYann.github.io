@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统操作员@ls-Super-Server :: 课题组数据库</title>
+    <style>
+        /* --- 核心黑客风格 CSS (与主页保持绝对一致) --- */
+        :root {
+            --bg-color: #0c0c0c;
+            --main-green: #00ff41;
+            --dim-green: #008f11;
+            --accent-cyan: #00bcd4;
+            --hover-bg: #1a1a1a;
+            --font-stack: 'Fira Code', 'Courier New', Courier, monospace;
+        }
+
+        body, html {
+            background-color: var(--bg-color);
+            color: var(--main-green);
+            font-family: var(--font-stack);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 终端屏幕容器 (允许内容长幅滚动) */
+        #terminal {
+            width: 90%;
+            max-width: 900px;
+            height: 85vh;
+            padding: 20px;
+            border: 1px solid var(--dim-green);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            overflow-y: auto;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        /* 自定义滚动条样式 */
+        #terminal::-webkit-scrollbar { width: 8px; }
+        #terminal::-webkit-scrollbar-track { background: var(--bg-color); border-left: 1px solid var(--dim-green); }
+        #terminal::-webkit-scrollbar-thumb { background: var(--dim-green); }
+        #terminal::-webkit-scrollbar-thumb:hover { background: var(--main-green); }
+
+        .status-bar {
+            color: var(--dim-green);
+            font-size: 0.8rem;
+            border-bottom: 1px dashed var(--dim-green);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            color: var(--main-green);
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--main-green);
+            padding-left: 10px;
+        }
+
+        /* --- 导师档案区块样式 --- */
+        .pi-profile {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            border: 1px dashed var(--dim-green);
+            background: rgba(0, 143, 17, 0.05);
+            align-items: flex-start;
+        }
+
+        .pi-photo {
+            width: 130px;
+            height: 170px;
+            border: 2px solid var(--main-green);
+            object-fit: cover;
+            background-color: #111;
+        }
+
+        .pi-info p { margin: 5px 0; line-height: 1.5; }
+        .data-label { color: var(--dim-green); }
+
+        /* --- 学生/成员网格样式 --- */
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .member-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 150px;
+            border: 1px solid var(--dim-green);
+            object-fit: cover;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            filter: grayscale(80%) contrast(120%); /* 增加黑客冷峻感 */
+        }
+
+        .member-card:hover .member-photo {
+            border-color: var(--accent-cyan);
+            filter: grayscale(0%) contrast(100%);
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+        }
+
+        /* 姓名链接样式 */
+        .hacker-link {
+            text-decoration: none;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            transition: all 0.2s ease;
+        }
+
+        .hacker-link:hover {
+            color: var(--bg-color);
+            background-color: var(--main-green);
+        }
+
+        /* 导航返回按钮 */
+        .nav-back {
+            display: inline-block;
+            margin-top: 40px;
+            color: var(--dim-green);
+            text-decoration: none;
+            border: 1px solid var(--dim-green);
+            padding: 5px 15px;
+        }
+        .nav-back:hover { border-color: var(--main-green); color: var(--main-green); }
+
+        @media (max-width: 600px) {
+            .pi-profile { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="terminal">
+        <div class="status-bar">
+            <span>[系统操作员@北京大学] :: 模块: LAB_GROUP_DATABASE</span>
+            <a href="index.html" style="color: var(--dim-green); text-decoration: none;">[返回主控台]</a>
+        </div>
+
+        <p style="color: var(--dim-green);">> 正在解密课题组档案数据...</p>
+
+        <div class="section-title">> 首席研究员 (Principal Investigator)</div>
+        <div class="pi-profile">
+            <img src="https://placehold.co/130x170/0c0c0c/00ff41?text=PI\nPHOTO" alt="导师照片" class="pi-photo">
+            <div class="pi-info">
+                <p><span class="data-label">姓名 [Name]:</span> 某某某 教授</p>
+                <p><span class="data-label">机构 [Affiliation]:</span> 北京大学 物理学院</p>
+                <p><span class="data-label">核心方向 [Core Research]:</span> 超快动力学 / 飞秒激光成丝实验 / 量子隧道效应</p>
+                <p><span class="data-label">联系方式 [Contact]:</span> admin@pku.edu.cn</p>
+                <p style="color: var(--dim-green); font-size: 0.9em; margin-top: 10px;">
+                    > 系统备注：实验室正在开展关于一氧化碳(CO)与氨气三聚体(Ammonia Trimers)的前沿理论计算与实验数据分析。
+                </p>
+            </div>
+        </div>
+
+        <div class="section-title">> 核心节点节点成员 (Team Members & Alumni)</div>
+        <div class="member-grid">
+            
+            <div class="member-card">
+                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n01" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">张三 (博士后)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n02" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">李四 (博士生)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n03" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">王五 (硕士生)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n04" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">赵六 (已毕业)</a>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="nav-back"><< 返回上一级目录 (cd ..)</a>
+        
+        <p style="color: var(--dim-green); margin-top: 30px;">> EOF_</p>
+    </div>
+
+</body>
+</html>
