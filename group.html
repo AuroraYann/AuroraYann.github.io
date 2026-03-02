@@ -202,37 +202,37 @@
         <p style="color: var(--dim-green); margin-top: 30px;">> EOF_</p>
     </div>
     <script>
-        // 1. 获取 HTML 中的图片元素节点 (使用我们刚才定义的 ID)
         const photoElement = document.getElementById('piPhoto');
 
-        // 2. 定义两个图片文件的路径 (请确保文件名与你上传的一致)
-        const photo1 = 'images/prof_photo_1.jpg';
-        const photo2 = 'images/prof_photo_2.jpg';
-
-        // 3. 为图片元素添加“点击”事件监听器
+        // 为图片元素添加“点击”事件监听器
         photoElement.addEventListener('click', function() {
-            // 获取当前图片的完整路径 (JS获取到的是绝对路径，我们需要提取最后的文件名)
+            // 获取当前图片的完整 URL 路径
             const currentSrc = photoElement.src;
 
-            // 核心切换逻辑：如果是图1，则换成图2；否则换回图1
-            // (这里使用 endsWith 来判断文件名，兼容性更好)
-            if (currentSrc.endsWith(photo1)) {
-                photoElement.src = photo2;
-                // 可选：添加一点黑客风格的控制台输出，增加氛围
-                console.log('> 系统指令：PI 视图已切换至安全模式 [MODE_B]');
-            } else {
-                photoElement.src = photo1;
-                console.log('> 系统指令：PI 视图已恢复默认模式 [MODE_A]');
-            }
-            
-            // 可选：添加一个简单的淡入淡出过渡效果，让切换不那么生硬
+            // 动画第一阶段：先让当前图片平滑隐身 (透明度降为0)
             photoElement.style.opacity = 0;
+
+            // 设下定时任务：等待 300 毫秒（刚好是图片隐身所需的时间）
             setTimeout(() => {
+                
+                // 核心逻辑修复：使用 includes() 仅抓取核心文件名进行模糊匹配，无视前面的绝对路径！
+                if (currentSrc.includes('prof_photo_1')) {
+                    // 如果当前是图1，就换成图2
+                    photoElement.src = 'images/prof_photo_2.jpg';
+                    console.log('> 系统指令：解密高级视图 [MODE_B]');
+                } else {
+                    // 否则换回图1
+                    photoElement.src = 'images/prof_photo_1.jpg';
+                    console.log('> 系统指令：恢复基础视图 [MODE_A]');
+                }
+                
+                // 动画第二阶段：图片源文件替换完毕，重新显形 (透明度恢复为1)
                 photoElement.style.opacity = 1;
-            }, 100);
+                
+            }, 300); // 这里的 300 对应下面 CSS transition 的 0.3s
         });
 
-        // 初始化：确保图片具有过渡效果的 CSS 属性
+        // 初始化设定：让透明度的变化拥有 0.3秒 的平滑缓冲效果
         photoElement.style.transition = 'opacity 0.3s ease';
     </script>
 
