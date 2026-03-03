@@ -160,7 +160,7 @@
 
         <div class="section-title">> W (Principal Investigator)</div>
         <div class="pi-profile">
-            <img id="piPhoto" src="images/prof_photo_1.jpg" alt="导师照片" class="pi-photo" style="cursor: pointer;" title="点击切换视图">
+            <img id="piPhoto" src="images/group/prof_photo_1.jpg" alt="导师照片" class="pi-photo" style="cursor: pointer;" title="点击切换视图">
             <div class="pi-info">
                 <p><span class="data-label">姓名 [Name]:</span> 吴成印 教授</p>
                 <p><span class="data-label">机构 [Affiliation]:</span> 北京大学 物理学院</p>
@@ -176,24 +176,55 @@
         <div class="member-grid">
             
             <div class="member-card">
-                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n01" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">张三 (博士后)</a>
+                <img src="images/group/WangYang.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">汪洋 (18级博士23年博后)</a>
             </div>
 
             <div class="member-card">
                 <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n02" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">李四 (博士生)</a>
+                <a href="#" class="hacker-link">张林枫 (19级博士)</a>
             </div>
 
             <div class="member-card">
-                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n03" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">王五 (硕士生)</a>
+                <img src="images/group/JiangPengZuo.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">姜朋佐 (20级博士)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="images/group/LiuYi.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">刘煜 (21级博士)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="images/group/XiaoJingying.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">肖静莹 (22级博士)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="images/group/ZhouZhuoYan.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">周卓彦 (23级博士)</a>
             </div>
 
             <div class="member-card">
                 <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n04" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">赵六 (已毕业)</a>
+                <a href="#" class="hacker-link">邢仲宸 (23级博士)</a>
             </div>
+
+            <div class="member-card">
+                <img src="images/group/DuanHongZe.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">段宏泽 (22级博士)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="images/group/LiXiao.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">李晓 (22级博士)</a>
+            </div>
+
+            <div class="member-card">
+                <img src="images/group/XueAoRan.jpg" alt="学生照片" class="member-photo">
+                <a href="#" class="hacker-link">薛傲然 (21级博士)</a>
+            </div>
+
 
         </div>
 
@@ -218,11 +249,11 @@
                 // 核心逻辑修复：使用 includes() 仅抓取核心文件名进行模糊匹配，无视前面的绝对路径！
                 if (currentSrc.includes('prof_photo_1')) {
                     // 如果当前是图1，就换成图2
-                    photoElement.src = 'images/prof_photo_2.jpg';
+                    photoElement.src = 'images/group/prof_photo_2.jpg';
                     console.log('> 系统指令：解密高级视图 [MODE_B]');
                 } else {
                     // 否则换回图1
-                    photoElement.src = 'images/prof_photo_1.jpg';
+                    photoElement.src = 'images/group/prof_photo_1.jpg';
                     console.log('> 系统指令：恢复基础视图 [MODE_A]');
                 }
                 
