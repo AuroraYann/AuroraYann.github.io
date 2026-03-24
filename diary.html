@@ -115,6 +115,21 @@
     </style>
 </head>
 <body>
+<div id="lock-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--main-green); font-family: var(--font-stack);">
+        
+        <div style="width: 80%; max-width: 600px; border: 1px solid var(--main-green); padding: 30px; box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); background-color: #050505;">
+            <p style="margin: 0 0 10px 0;">> 警告 (WARNING): 该区域为高度机密 (TOP_SECRET)。</p>
+            <p style="margin: 0 0 20px 0;">> 正在请求访问: 个人加密日志区_</p>
+            
+            <div style="display: flex; align-items: center;">
+                <span style="margin-right: 10px;">> 请输入授权密钥 (Password):</span>
+                <input type="password" id="pwd-input" style="background: transparent; border: none; border-bottom: 1px solid var(--dim-green); color: var(--main-green); font-family: var(--font-stack); font-size: 1rem; outline: none; width: 150px; letter-spacing: 3px;" autofocus>
+            </div>
+            
+            <p id="error-msg" style="color: #e91e63; margin-top: 15px; visibility: hidden;">> 错误 (ERROR): 密钥无效，访问被拒绝。</p>
+        </div>
+    </div>
+
 
     <div id="terminal">
         <div class="status-bar">
@@ -148,6 +163,42 @@
         <a href="index.html" class="nav-back"><< 返回上一级目录 (cd ..)</a>
         <p style="color: var(--dim-green); margin-top: 30px;">> 记录完毕。系统待机中_</p>
     </div>
+
+    /* =========================================
+           安全门禁拦截逻辑
+           ========================================= */
+        const lockScreen = document.getElementById('lock-screen');
+        const pwdInput = document.getElementById('pwd-input');
+        const errorMsg = document.getElementById('error-msg');
+
+        // 设置你的专属密码 (切记：懂代码的人F12能看到这个密码)
+        const SECRET_KEY = "z2y3999"; // <--- 把这里改成你想要的密码！
+
+        // 监听密码输入框的按键事件
+        pwdInput.addEventListener('keypress', function(e) {
+            // 当用户按下回车键 (Enter)
+            if (e.key === 'Enter') {
+                if (pwdInput.value === SECRET_KEY) {
+                    // 密码正确：添加极其酷炫的淡出效果
+                    console.log('> 授权通过，正在解除系统锁定...');
+                    lockScreen.style.transition = 'opacity 0.5s ease';
+                    lockScreen.style.opacity = '0';
+                    
+                    // 等待淡出动画结束(0.5秒)后，彻底移走这块“黑布”
+                    setTimeout(() => {
+                        lockScreen.style.display = 'none';
+                    }, 500);
+                } else {
+                    // 密码错误：显示红色警告，清空输入框
+                    console.log('> 警报：非法入侵尝试！');
+                    errorMsg.style.visibility = 'visible';
+                    pwdInput.value = '';
+                    
+                    // 让错误提示闪烁一下
+                    setTimeout(() => { errorMsg.style.visibility = 'hidden'; }, 1500);
+                }
+            }
+        });
 
     <script>
         /* 个人日记数据库 (JSON 格式) */
