@@ -72,14 +72,7 @@
             align-items: flex-start;
         }
 
-        .pi-photo {
-            width: 130px;
-            height: 170px;
-            border: 2px solid var(--main-green);
-            object-fit: cover;
-            background-color: #111;
-        }
-
+        .pi-photo { width: 130px; height: 170px; border: 2px solid var(--main-green); object-fit: cover; background-color: #111; }
         .pi-info p { margin: 5px 0; line-height: 1.5; }
         .data-label { color: var(--dim-green); }
 
@@ -90,167 +83,70 @@
             margin-top: 20px;
         }
 
-        .member-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
+        .member-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .member-photo { width: 120px; height: 150px; border: 1px solid var(--dim-green); object-fit: cover; margin-bottom: 10px; transition: all 0.3s ease; }
+        .member-card:hover .member-photo { border-color: var(--accent-cyan); box-shadow: 0 0 10px rgba(0, 188, 212, 0.5); }
 
-        .member-photo {
-            width: 120px;
-            height: 150px;
-            border: 1px solid var(--dim-green);
-            object-fit: cover;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .member-card:hover .member-photo {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
-        }
-
-        .hacker-link {
-            text-decoration: none;
-            color: var(--accent-cyan);
-            font-size: 1rem;
-            font-weight: bold;
-            padding: 3px 8px;
-            transition: all 0.2s ease;
-        }
-
-        .hacker-link:hover {
-            color: var(--bg-color);
-            background-color: var(--main-green);
-        }
-
-        .nav-back {
-            display: inline-block;
-            margin-top: 40px;
-            color: var(--dim-green);
-            text-decoration: none;
-            border: 1px solid var(--dim-green);
-            padding: 5px 15px;
-        }
-        .nav-back:hover { border-color: var(--main-green); color: var(--main-green); }
-
-        @media (max-width: 600px) {
-            .pi-profile { flex-direction: column; align-items: center; text-align: center; }
-        }
+        .hacker-link { text-decoration: none; color: var(--accent-cyan); font-size: 1rem; font-weight: bold; padding: 3px 8px; transition: all 0.2s ease; }
+        .hacker-link:hover { color: var(--bg-color); background-color: var(--main-green); }
 
         /* =========================================
-           新增：日历模块 (Activity Calendar) 核心样式
+           动态日历模块 CSS 
            ========================================= */
-        .calendar-wrapper {
-            margin-top: 20px;
-            border: 1px dashed var(--dim-green);
-            padding: 15px;
-            background: rgba(0, 143, 17, 0.02);
+        .calendar-wrapper { margin-top: 20px; border: 1px dashed var(--dim-green); padding: 15px; background: rgba(0, 143, 17, 0.02); }
+        
+        /* 日历控制台 (控制年份和月份) */
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--dim-green);
         }
 
-        /* 星期表头 */
-        .week-header {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-weight: bold;
-            color: var(--dim-green);
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--dim-green);
-        }
-
-        /* 日历主体网格 */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-
-        /* 单个日期格子 */
-        .calendar-day {
-            border: 1px solid var(--hover-bg);
-            min-height: 70px;
-            padding: 5px;
-            position: relative; /* 极其重要：为悬浮卡片提供定位基准 */
-            color: var(--dim-green);
-            transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.01);
-        }
-
-        .calendar-day:hover {
-            border-color: var(--main-green);
-            background-color: rgba(0, 255, 65, 0.05);
-        }
-
-        .day-number {
-            font-size: 0.9em;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        /* 默认显示的简易标签 */
-        .event-label {
-            display: inline-block;
-            color: var(--bg-color);
-            padding: 2px 6px;
-            font-size: 0.8em;
-            font-weight: bold;
-            border-radius: 2px;
+        .control-btn {
+            background: none;
+            border: 1px solid var(--dim-green);
+            color: var(--main-green);
+            padding: 5px 10px;
             cursor: pointer;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-            margin-bottom: 3px;
+            font-family: var(--font-stack);
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        .control-btn:hover { background: var(--main-green); color: var(--bg-color); }
+
+        .current-date-display { font-size: 1.2rem; font-weight: bold; color: var(--accent-cyan); letter-spacing: 2px; }
+
+        .week-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; color: var(--dim-green); margin-bottom: 10px; padding-bottom: 5px; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+
+        .calendar-day { border: 1px solid var(--hover-bg); min-height: 70px; padding: 5px; position: relative; color: var(--dim-green); transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.01); }
+        .calendar-day:not(.empty):hover { border-color: var(--main-green); background-color: rgba(0, 255, 65, 0.05); }
+        .calendar-day.empty { border: 1px dashed transparent; background: transparent; }
+
+        .day-number { font-size: 0.9em; margin-bottom: 8px; font-weight: bold; }
+
+        .event-label {
+            display: inline-block; color: var(--bg-color); padding: 2px 6px; font-size: 0.8em; font-weight: bold; border-radius: 2px; cursor: pointer; width: 100%; box-sizing: border-box; text-align: center; margin-bottom: 3px;
         }
         
-        /* 不同活动的标签颜色体系 */
-        .event-label.meeting { background-color: var(--accent-cyan); } /* cyan (开会) */
-        .event-label.dinner  { background-color: #ff9800; }            /* orange (聚餐) */
-        .event-label.outing  { background-color: #e91e63; }            /* pink (出游) */
+        .event-label.meeting { background-color: var(--accent-cyan); } 
+        .event-label.dinner  { background-color: #ff9800; }            
+        .event-label.outing  { background-color: #e91e63; }            
+        .event-label.lab     { background-color: #8bc34a; } /* 新增：实验类活动 */
 
-        /* 悬停展示的详细信息卡片 (核心解密效果) */
         .event-details {
-            position: absolute;
-            top: 100%; /* 出现在日期格子的正下方 */
-            left: 50%; /* 水平居中 */
-            transform: translateX(-50%); /* 水平居中 */
-            width: 260px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--main-green);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
-            padding: 12px;
-            z-index: 100; /* 保证它显示在最顶层，不被其他格子遮挡 */
-            
-            /* 默认隐藏的魔法 */
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 260px; background-color: var(--bg-color); border: 1px solid var(--main-green); box-shadow: 0 0 20px rgba(0, 255, 65, 0.4); padding: 12px; z-index: 100;
+            opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-
-        /* 当鼠标悬停在带有 .has-event 的格子上时，让隐藏的卡片显形 */
-        .calendar-day.has-event:hover .event-details {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .event-details img {
-            width: 100%;
-            height: auto;
-            border: 1px solid var(--dim-green);
-            margin-bottom: 10px;
-            filter: grayscale(30%); /* 保持一点黑客灰度 */
-        }
-
-        .event-details p {
-            color: var(--main-green);
-            font-size: 0.85em;
-            margin: 0;
-            line-height: 1.4;
-            white-space: normal; /* 允许文字换行 */
-        }
+        .calendar-day.has-event:hover .event-details { opacity: 1; visibility: visible; }
+        .event-details img { width: 100%; height: auto; border: 1px solid var(--dim-green); margin-bottom: 10px; filter: grayscale(30%); }
+        .event-details p { color: var(--main-green); font-size: 0.85em; margin: 0; line-height: 1.4; white-space: normal; }
+        
+        .nav-back { display: inline-block; margin-top: 40px; color: var(--dim-green); text-decoration: none; border: 1px solid var(--dim-green); padding: 5px 15px; }
+        .nav-back:hover { border-color: var(--main-green); color: var(--main-green); }
     </style>
 </head>
 <body>
@@ -265,7 +161,7 @@
 
         <div class="section-title">> W (Principal Investigator)</div>
         <div class="pi-profile">
-            <img id="piPhoto" src="images/group/prof_photo_1.jpg" alt="导师照片" class="pi-photo" style="cursor: pointer;" title="点击切换视图">
+            <img id="piPhoto" src="images/group/prof_photo_1.jpg" alt="导师照片" class="pi-photo" style="cursor: pointer;">
             <div class="pi-info">
                 <p><span class="data-label">姓名 [Name]:</span> 吴成印 教授</p>
                 <p><span class="data-label">机构 [Affiliation]:</span> 北京大学 物理学院</p>
@@ -277,135 +173,142 @@
             </div>
         </div>
 
-        <div class="section-title">> 课题组大神 (Team Gods)</div>
-        <div class="member-grid">
-            <div class="member-card">
-                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n01" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">郑伟 (17级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/WangYang.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">汪洋 (18级博士23年博后)</a>
-            </div>
-            <div class="member-card">
-                <img src="https://placehold.co/120x150/0c0c0c/008f11?text=DATA\n02" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">张林枫 (19级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/JiangPengZuo.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">姜朋佐 (20级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/LiuYi.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">刘煜 (21级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/XiaoJingying.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">肖静莹 (22级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/ZhouZhuoYan.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">周卓彦 (23级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/XingZhongChen.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">邢仲宸 (23级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/DuanHongZe.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">段宏泽 (24级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/LiXiao.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">李晓 (24级博士)</a>
-            </div>
-            <div class="member-card">
-                <img src="images/group/XueAoRan.jpg" alt="学生照片" class="member-photo">
-                <a href="#" class="hacker-link">薛傲然 (25级博士)</a>
-            </div>
-        </div>
-
-        <div class="section-title">> 活动日志 (Activity Log_2026.03)</div>
+        <div class="section-title">> 活动日志 (Activity Log)</div>
         <div class="calendar-wrapper">
+            <div class="calendar-controls">
+                <div>
+                    <button class="control-btn" id="prevYear"><< 上一年</button>
+                    <button class="control-btn" id="prevMonth">< 上个月</button>
+                </div>
+                <div class="current-date-display" id="monthYearDisplay">YYYY.MM</div>
+                <div>
+                    <button class="control-btn" id="nextMonth">下个月 ></button>
+                    <button class="control-btn" id="nextYear">下一年 >></button>
+                </div>
+            </div>
+
             <div class="week-header">
                 <div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
             </div>
             
-            <div class="calendar-grid">
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                <div class="calendar-day"></div>
-                
-                <div class="calendar-day"><div class="day-number">01</div></div>
-                <div class="calendar-day"><div class="day-number">02</div></div>
-                <div class="calendar-day"><div class="day-number">03</div></div>
-                <div class="calendar-day"><div class="day-number">04</div></div>
-                <div class="calendar-day"><div class="day-number">05</div></div>
-
-                <div class="calendar-day has-event">
-                    <div class="day-number">06</div>
-                    <div class="event-label meeting">[组会]</div>
-                    
-                    <div class="event-details">
-                        <img src="https://placehold.co/220x130/0c0c0c/00bcd4?text=Meeting\nPhoto" alt="组会记录">
-                        <p><strong>[进展汇报]</strong><br>讨论了飞秒强激光与团簇相互作用的最新实验数据，调整了下周的探测器参数。</p>
-                    </div>
-                </div>
-
-                <div class="calendar-day"><div class="day-number">07</div></div>
-                <div class="calendar-day"><div class="day-number">08</div></div>
-                <div class="calendar-day"><div class="day-number">09</div></div>
-                <div class="calendar-day"><div class="day-number">10</div></div>
-                <div class="calendar-day"><div class="day-number">11</div></div>
-
-                <div class="calendar-day"><div class="day-number">13</div></div>
-                <div class="calendar-day"><div class="day-number">14</div></div>
-                <div class="calendar-day"><div class="day-number">15</div></div>
-                <div class="calendar-day"><div class="day-number">16</div></div>
-                <div class="calendar-day"><div class="day-number">17</div></div>
-                <div class="calendar-day"><div class="day-number">18</div></div>
-                <div class="calendar-day"><div class="day-number">19</div></div>
-
-                <div class="calendar-day has-event">
-                    <div class="day-number">20</div>
-                    <div class="event-label outing">[出游]</div>
-                    
-                    <div class="event-details">
-                        <img src="https://placehold.co/220x130/0c0c0c/e91e63?text=Trip\nPhoto" alt="出游照片">
-                        <p><strong>[春季团建]</strong><br>全组前往郊区爬山踏青。远离了实验室的激光器，大家在山顶合影留念。</p>
-                    </div>
-                </div>
-
-                <div class="calendar-day"><div class="day-number">21</div></div>
-                <div class="calendar-day"><div class="day-number">22</div></div>
-                <div class="calendar-day has-event">
-                    <div class="day-number">23</div>
-                    <div class="event-label dinner">[聚餐]</div>
-                    
-                    <div class="event-details">
-                        <img src="https://placehold.co/220x130/0c0c0c/ff9800?text=Dinner\nPhoto" alt="聚餐照片">
-                        <p><strong>[聚餐]</strong><br>庆祝刘师兄发表论文，鹤一狂炫烤肉。</p>
-                    </div>
-                </div>
-                <div class="calendar-day"><div class="day-number">24</div></div>
-                <div class="calendar-day"><div class="day-number">25</div></div>
-                <div class="calendar-day"><div class="day-number">26</div></div>
-                <div class="calendar-day"><div class="day-number">27</div></div>
-                <div class="calendar-day"><div class="day-number">28</div></div>
-                <div class="calendar-day"><div class="day-number">29</div></div>
-                <div class="calendar-day"><div class="day-number">30</div></div>
-                <div class="calendar-day"><div class="day-number">31</div></div>
-            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
         </div>
+
         <a href="index.html" class="nav-back"><< 返回上一级目录 (cd ..)</a>
-        
         <p style="color: var(--dim-green); margin-top: 30px;">> EOF_</p>
     </div>
 
     <script>
+        /* ===================================================================
+           核心数据库：以后只需在这里添加日期和事件，无需改动任何 HTML 结构！
+           格式要求："YYYY-MM-DD"
+           类别 (type) 可选: meeting(组会), dinner(聚餐), outing(出游), lab(实验)
+           =================================================================== */
+        const eventDatabase = {
+            "2026-03-23": {
+                type: "meeting", label: "[PRA 提交]", img: "https://placehold.co/220x130/0c0c0c/00bcd4?text=PRA\nPaper", title: "[论文进展]",
+                desc: "Physical Review A (PRA) 期刊版权协议已全部签署完毕，静候佳音。"
+            },
+            "2026-03-10": {
+                type: "meeting", label: "[理论讨论]", img: "https://placehold.co/220x130/0c0c0c/00bcd4?text=Trimer\nSym", title: "[氨气三聚体]",
+                desc: "课题组集体讨论了氨气三聚体(Ammonia Trimer)的对称性破缺理论模型与配图。"
+            },
+            "2026-01-05": {
+                type: "lab", label: "[飞秒成丝]", img: "https://placehold.co/220x130/0c0c0c/8bc34a?text=Laser\nFilament", title: "[实验进展]",
+                desc: "成功进行 N2/O2 混合气体飞秒激光成丝实验，开始使用 Python 拟合化学动力学模型。"
+            },
+            "2025-12-29": {
+                type: "lab", label: "[RABBITT]", img: "https://placehold.co/220x130/0c0c0c/8bc34a?text=RABBITT\nExp", title: "[实验进展]",
+                desc: "一氧化碳(CO)分子的 RABBITT 实验测量顺利结束，阿秒物理实验阶段性收网。"
+            },
+            "2025-09-12": {
+                type: "dinner", label: "[迎新聚餐]", img: "https://placehold.co/220x130/0c0c0c/ff9800?text=Dinner", title: "[迎新聚餐]",
+                desc: "庆祝 25 级新生加入课题组！大家在实验室附近的烤肉店大快朵颐。"
+            }
+        };
+
+        /* --- 动态日历引擎 --- */
+        let currentDate = new Date(); // 默认获取现实世界的当前时间
+        
+        const grid = document.getElementById('calendarGrid');
+        const display = document.getElementById('monthYearDisplay');
+
+        // 核心渲染函数
+        function renderCalendar(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth(); // 0-11
+            
+            // 更新 UI 上的年月显示 (如 2026.03)
+            display.innerText = `${year}.${String(month + 1).padStart(2, '0')}`;
+            grid.innerHTML = ''; // 清空上次的网格
+
+            // 计算这个月的第一天是星期几 (0是周日, 1-6是周一到周六)
+            let firstDay = new Date(year, month, 1).getDay();
+            // 将星期日(0)转换到最后面，使周一排在第一列
+            firstDay = firstDay === 0 ? 6 : firstDay - 1; 
+            
+            // 计算这个月一共多少天
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // 1. 填充1号之前的空白占位格子
+            for (let i = 0; i < firstDay; i++) {
+                grid.innerHTML += `<div class="calendar-day empty"></div>`;
+            }
+
+            // 2. 填充真实的日期
+            for (let day = 1; day <= daysInMonth; day++) {
+                // 拼接标准的日期字符串，例如 "2026-03-05"
+                const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                // 去数据库里查这一天有没有活动
+                const event = eventDatabase[dateString];
+
+                if (event) {
+                    // 如果有活动，渲染高亮格子和悬浮窗
+                    grid.innerHTML += `
+                        <div class="calendar-day has-event">
+                            <div class="day-number">${String(day).padStart(2, '0')}</div>
+                            <div class="event-label ${event.type}">${event.label}</div>
+                            <div class="event-details">
+                                <img src="${event.img}" alt="活动记录">
+                                <p><strong>${event.title}</strong><br>${event.desc}</p>
+                            </div>
+                        </div>`;
+                } else {
+                    // 如果没有活动，渲染普通格子
+                    grid.innerHTML += `
+                        <div class="calendar-day">
+                            <div class="day-number">${String(day).padStart(2, '0')}</div>
+                        </div>`;
+                }
+            }
+        }
+
+        /* --- 按钮事件绑定 --- */
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+
+        document.getElementById('prevYear').addEventListener('click', () => {
+            currentDate.setFullYear(currentDate.getFullYear() - 1);
+            renderCalendar(currentDate);
+        });
+
+        document.getElementById('nextYear').addEventListener('click', () => {
+            currentDate.setFullYear(currentDate.getFullYear() + 1);
+            renderCalendar(currentDate);
+        });
+
+        // 页面刚加载时，立刻渲染当月的日历
+        renderCalendar(currentDate);
+
+        /* --- 导师照片切换逻辑 (保持不变) --- */
         const photoElement = document.getElementById('piPhoto');
         photoElement.addEventListener('click', function() {
             const currentSrc = photoElement.src;
@@ -413,16 +316,13 @@
             setTimeout(() => {
                 if (currentSrc.includes('prof_photo_1')) {
                     photoElement.src = 'images/group/prof_photo_2.jpg';
-                    console.log('> 系统指令：解密高级视图 [MODE_B]');
                 } else {
                     photoElement.src = 'images/group/prof_photo_1.jpg';
-                    console.log('> 系统指令：恢复基础视图 [MODE_A]');
                 }
                 photoElement.style.opacity = 1;
             }, 300); 
         });
         photoElement.style.transition = 'opacity 0.3s ease';
     </script>
-
 </body>
 </html>
