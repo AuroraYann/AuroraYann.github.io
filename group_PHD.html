@@ -121,7 +121,7 @@
 
         .event-label { display: inline-block; color: var(--bg-color); padding: 2px 6px; font-size: 0.8em; font-weight: bold; border-radius: 2px; cursor: pointer; width: 100%; box-sizing: border-box; text-align: center; margin-bottom: 3px; }
         .event-label.meeting { background-color: var(--accent-cyan); } 
-        .event-label.dinner  { background-color: #ff9800; }            
+        .event-label.food  { background-color: #ff9800; }            
         .event-label.outing  { background-color: #e91e63; }            
         .event-label.lab     { background-color: #8bc34a; } 
 
@@ -135,6 +135,25 @@
         
         .nav-back { display: inline-block; margin-top: 40px; color: var(--dim-green); text-decoration: none; border: 1px solid var(--dim-green); padding: 5px 15px; }
         .nav-back:hover { border-color: var(--main-green); color: var(--main-green); }
+
+        /* =========================================
+           补丁：修复日历边缘悬浮窗被遮挡的问题 (Edge Overflow Fix)
+           ========================================= */
+        
+        /* 针对第 1 列(周一) 和 第 2 列(周二)：让卡片左侧与格子对齐，向右展开 */
+        .calendar-grid .calendar-day:nth-child(7n+1) .event-details,
+        .calendar-grid .calendar-day:nth-child(7n+2) .event-details {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        /* 针对第 6 列(周六) 和 第 7 列(周日)：让卡片右侧与格子对齐，向左展开 */
+        .calendar-grid .calendar-day:nth-child(7n+6) .event-details,
+        .calendar-grid .calendar-day:nth-child(7n) .event-details {
+            left: auto;
+            right: 0;
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body>
@@ -238,10 +257,10 @@
         /* 核心数据库 (JSON 格式) */
         const eventDatabase = {
             "2026-03-23": {
-                type: "meeting", label: "[PRA 提交]", img: "https://placehold.co/220x130/0c0c0c/00bcd4?text=PRA\nPaper", title: "[论文进展]",
+                type: "food", label: "[聚餐]", img: "images/group/20260323.jpg", title: "[论文进展]",
                 desc: "Physical Review A (PRA) 期刊版权协议已全部签署完毕，静候佳音。"
             },
-            "2026-03-10": {
+            "2026-03-24": {
                 type: "meeting", label: "[理论讨论]", img: "https://placehold.co/220x130/0c0c0c/00bcd4?text=Trimer\nSym", title: "[氨气三聚体]",
                 desc: "课题组集体讨论了氨气三聚体(Ammonia Trimer)的对称性破缺理论模型与配图。"
             },
