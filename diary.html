@@ -4,140 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>系统操作员@ls-Super-Server :: 个人加密日志</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
-        /* --- 核心黑客风格 CSS --- */
-        :root {
-            --bg-color: #0c0c0c;
-            --main-green: #00ff41;
-            --dim-green: #008f11;
-            --accent-cyan: #00bcd4;
-            --hover-bg: #1a1a1a;
-            --font-stack: 'Fira Code', 'Courier New', Courier, monospace;
-        }
-
-        body, html {
-            background-color: var(--bg-color);
-            color: var(--main-green);
-            font-family: var(--font-stack);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #terminal {
-            width: 90%;
-            max-width: 900px;
-            height: 85vh;
-            padding: 20px;
-            border: 1px solid var(--dim-green);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-            overflow-y: auto;
-            position: relative;
-        }
-
-        #terminal::-webkit-scrollbar { width: 8px; }
-        #terminal::-webkit-scrollbar-track { background: var(--bg-color); border-left: 1px solid var(--dim-green); }
-        #terminal::-webkit-scrollbar-thumb { background: var(--dim-green); }
-        #terminal::-webkit-scrollbar-thumb:hover { background: var(--main-green); }
-
-        .status-bar {
-            color: var(--dim-green);
-            font-size: 0.8rem;
-            border-bottom: 1px dashed var(--dim-green);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .section-title {
-            color: var(--main-green);
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            border-left: 3px solid var(--main-green);
-            padding-left: 10px;
-        }
-
-        /* =========================================
-           动态日历模块 CSS 
-           ========================================= */
-        .calendar-wrapper { border: 1px dashed var(--dim-green); padding: 15px; background: rgba(0, 143, 17, 0.02); }
+        /* 保持原有的黑客风格 CSS 完全不变 */
+        :root { --bg-color: #0c0c0c; --main-green: #00ff41; --dim-green: #008f11; --accent-cyan: #00bcd4; --hover-bg: #1a1a1a; --font-stack: 'Fira Code', 'Courier New', Courier, monospace; }
+        body, html { background-color: var(--bg-color); color: var(--main-green); font-family: var(--font-stack); margin: 0; padding: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        #terminal { width: 90%; max-width: 900px; height: 85vh; padding: 20px; border: 1px solid var(--dim-green); box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); overflow-y: auto; position: relative; }
+        #terminal::-webkit-scrollbar { width: 8px; } #terminal::-webkit-scrollbar-track { background: var(--bg-color); border-left: 1px solid var(--dim-green); } #terminal::-webkit-scrollbar-thumb { background: var(--dim-green); } #terminal::-webkit-scrollbar-thumb:hover { background: var(--main-green); }
+        .status-bar { color: var(--dim-green); font-size: 0.8rem; border-bottom: 1px dashed var(--dim-green); padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; }
+        .section-title { color: var(--main-green); font-weight: bold; margin-top: 10px; margin-bottom: 15px; border-left: 3px solid var(--main-green); padding-left: 10px; }
         
-        .calendar-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed var(--dim-green);
-        }
-
+        .calendar-wrapper { border: 1px dashed var(--dim-green); padding: 15px; background: rgba(0, 143, 17, 0.02); }
+        .calendar-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed var(--dim-green); }
         .control-btn { background: none; border: 1px solid var(--dim-green); color: var(--main-green); padding: 5px 10px; cursor: pointer; font-family: var(--font-stack); font-weight: bold; transition: all 0.2s ease; }
         .control-btn:hover { background: var(--main-green); color: var(--bg-color); }
         .current-date-display { font-size: 1.2rem; font-weight: bold; color: var(--accent-cyan); letter-spacing: 2px; }
-
         .week-header { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; color: var(--dim-green); margin-bottom: 10px; padding-bottom: 5px; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
-
         .calendar-day { border: 1px solid var(--hover-bg); min-height: 80px; padding: 5px; position: relative; color: var(--dim-green); transition: all 0.3s ease; background-color: rgba(255, 255, 255, 0.01); }
         .calendar-day:not(.empty):hover { border-color: var(--main-green); background-color: rgba(0, 255, 65, 0.05); }
         .calendar-day.empty { border: 1px dashed transparent; background: transparent; }
-
         .day-number { font-size: 0.9em; margin-bottom: 8px; font-weight: bold; }
 
-        /* 日记专属标签体系 */
         .event-label { display: inline-block; color: var(--bg-color); padding: 2px 6px; font-size: 0.8em; font-weight: bold; border-radius: 2px; cursor: pointer; width: 100%; box-sizing: border-box; text-align: center; margin-bottom: 3px; }
-        .event-label.coding     { background-color: #ff9800; } /* 橙色 - 代码/算力 */
-        .event-label.experiment { background-color: #8bc34a; } /* 绿色 - 实验/物理 */
-        .event-label.writing    { background-color: var(--accent-cyan); } /* 蓝色 - 论文/写作 */
-        .event-label.life       { background-color: #e91e63; } /* 粉色 - 生活/创意 */
-
-        .event-details {
-            position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 260px; background-color: var(--bg-color); border: 1px solid var(--main-green); box-shadow: 0 0 20px rgba(0, 255, 65, 0.4); padding: 12px; z-index: 100;
-            opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
+        .event-label.coding { background-color: #ff9800; } .event-label.experiment { background-color: #8bc34a; } .event-label.writing { background-color: var(--accent-cyan); } .event-label.life { background-color: #e91e63; }
+        .event-details { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 260px; background-color: var(--bg-color); border: 1px solid var(--main-green); box-shadow: 0 0 20px rgba(0, 255, 65, 0.4); padding: 12px; z-index: 100; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .calendar-day.has-event:hover .event-details { opacity: 1; visibility: visible; }
         .event-details img { width: 100%; height: auto; border: 1px solid var(--dim-green); margin-bottom: 10px; filter: grayscale(30%); }
         .event-details p { color: var(--main-green); font-size: 0.85em; margin: 0; line-height: 1.4; white-space: normal; }
         
-        /* 边缘溢出修复补丁 (Edge Overflow Fix) */
-        .calendar-grid .calendar-day:nth-child(7n+1) .event-details,
-        .calendar-grid .calendar-day:nth-child(7n+2) .event-details { left: 0; transform: translateX(0); }
-        .calendar-grid .calendar-day:nth-child(7n+6) .event-details,
-        .calendar-grid .calendar-day:nth-child(7n) .event-details { left: auto; right: 0; transform: translateX(0); }
+        .calendar-grid .calendar-day:nth-child(7n+1) .event-details, .calendar-grid .calendar-day:nth-child(7n+2) .event-details { left: 0; transform: translateX(0); }
+        .calendar-grid .calendar-day:nth-child(7n+6) .event-details, .calendar-grid .calendar-day:nth-child(7n) .event-details { left: auto; right: 0; transform: translateX(0); }
+        .nav-back { display: inline-block; margin-top: 40px; color: var(--dim-green); text-decoration: none; border: 1px solid var(--dim-green); padding: 5px 15px; } .nav-back:hover { border-color: var(--main-green); color: var(--main-green); }
 
-        .nav-back { display: inline-block; margin-top: 40px; color: var(--dim-green); text-decoration: none; border: 1px solid var(--dim-green); padding: 5px 15px; }
-        .nav-back:hover { border-color: var(--main-green); color: var(--main-green); }
+        /* 新增：终端密码拦截墙样式 */
+        #lock-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); 
+            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            color: var(--main-green); font-family: var(--font-stack);
+        }
     </style>
 </head>
 <body>
-<div id="lock-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--main-green); font-family: var(--font-stack);">
-        
+
+    <div id="lock-screen">
         <div style="width: 80%; max-width: 600px; border: 1px solid var(--main-green); padding: 30px; box-shadow: 0 0 20px rgba(0, 255, 65, 0.2); background-color: #050505;">
             <p style="margin: 0 0 10px 0;">> 警告 (WARNING): 该区域为高度机密 (TOP_SECRET)。</p>
             <p style="margin: 0 0 20px 0;">> 正在请求访问: 个人加密日志区_</p>
-            
             <div style="display: flex; align-items: center;">
                 <span style="margin-right: 10px;">> 请输入授权密钥 (Password):</span>
                 <input type="password" id="pwd-input" style="background: transparent; border: none; border-bottom: 1px solid var(--dim-green); color: var(--main-green); font-family: var(--font-stack); font-size: 1rem; outline: none; width: 150px; letter-spacing: 3px;" autofocus>
             </div>
-            
-            <p id="error-msg" style="color: #e91e63; margin-top: 15px; visibility: hidden;">> 错误 (ERROR): 密钥无效，访问被拒绝。</p>
+            <p id="error-msg" style="color: #e91e63; margin-top: 15px; visibility: hidden;">> 错误 (ERROR): 解密失败，密钥无效或数据已损坏。</p>
         </div>
     </div>
-
 
     <div id="terminal">
         <div class="status-bar">
             <span>[系统操作员@ls-Super-Server] :: 模块: PERSONAL_DIARY_ENCRYPTED</span>
             <a href="index.html" style="color: var(--dim-green); text-decoration: none;">[返回主控台]</a>
         </div>
-
-        <p style="color: var(--dim-green);">> 验证通过。正在解密个人日记数据区...</p>
+        <p style="color: var(--dim-green);">> 验证通过。成功解密个人日记数据区...</p>
 
         <div class="section-title">> 核心时间轴 (Timeline)</div>
         <div class="calendar-wrapper">
@@ -152,11 +79,7 @@
                     <button class="control-btn" id="nextYear">下一年 >></button>
                 </div>
             </div>
-
-            <div class="week-header">
-                <div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div>
-            </div>
-            
+            <div class="week-header"><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div><div>SUN</div></div>
             <div class="calendar-grid" id="calendarGrid"></div>
         </div>
 
@@ -164,76 +87,57 @@
         <p style="color: var(--dim-green); margin-top: 30px;">> 记录完毕。系统待机中_</p>
     </div>
 
-    /* =========================================
-           安全门禁拦截逻辑
-           ========================================= */
+    <script>
+        // =========================================================================
+        // 【绝对机密区】将你用 encoder.html 生成的以 "U2FsdGVkX1" 开头的密文粘贴到这里！
+        // =========================================================================
+        const ENCRYPTED_DATA = "把你的密文粘贴在双引号里"; 
+
         const lockScreen = document.getElementById('lock-screen');
         const pwdInput = document.getElementById('pwd-input');
         const errorMsg = document.getElementById('error-msg');
+        const grid = document.getElementById('calendarGrid');
+        const display = document.getElementById('monthYearDisplay');
 
-        // 设置你的专属密码 (切记：懂代码的人F12能看到这个密码)
-        const SECRET_KEY = "z2y3999"; // <--- 把这里改成你想要的密码！
+        let currentDate = new Date(); 
+        let currentDatabase = {}; // 全局变量，存放成功解密后的数据
 
-        // 监听密码输入框的按键事件
+        // 监听密码输入
         pwdInput.addEventListener('keypress', function(e) {
-            // 当用户按下回车键 (Enter)
             if (e.key === 'Enter') {
-                if (pwdInput.value === SECRET_KEY) {
-                    // 密码正确：添加极其酷炫的淡出效果
-                    console.log('> 授权通过，正在解除系统锁定...');
+                const pwd = pwdInput.value;
+                try {
+                    // 1. 发起 AES 强制解密
+                    const bytes = CryptoJS.AES.decrypt(ENCRYPTED_DATA, pwd);
+                    const decryptedStr = bytes.toString(CryptoJS.enc.Utf8);
+
+                    // 2. 如果密码错了，解出来的字符串是空的或者乱码，这步检查会抛出异常跳入 catch！
+                    if (!decryptedStr) throw new Error("解密为空"); 
+                    currentDatabase = JSON.parse(decryptedStr); 
+
+                    // 3. 解密成功，撤除门禁
+                    console.log('> 授权通过，系统解密成功_');
                     lockScreen.style.transition = 'opacity 0.5s ease';
                     lockScreen.style.opacity = '0';
-                    
-                    // 等待淡出动画结束(0.5秒)后，彻底移走这块“黑布”
-                    setTimeout(() => {
-                        lockScreen.style.display = 'none';
-                    }, 500);
-                } else {
-                    // 密码错误：显示红色警告，清空输入框
-                    console.log('> 警报：非法入侵尝试！');
+                    setTimeout(() => { lockScreen.style.display = 'none'; }, 500);
+
+                    // 4. 将解密出的真实数据注入日历并渲染
+                    renderCalendar(currentDate, currentDatabase);
+
+                } catch (error) {
+                    // 密码错误处理
+                    console.log('> 警报：解密失败，非法访问！');
                     errorMsg.style.visibility = 'visible';
                     pwdInput.value = '';
-                    
-                    // 让错误提示闪烁一下
                     setTimeout(() => { errorMsg.style.visibility = 'hidden'; }, 1500);
                 }
             }
         });
 
-    <script>
-        /* 个人日记数据库 (JSON 格式) */
-        const diaryDatabase = {
-            "2026-03-23": {
-                type: "writing", label: "[PRA 提交]", img: "https://placehold.co/220x130/0c0c0c/00bcd4?text=Paper", title: "[版权签署完毕]",
-                desc: "今天终于把 PRA 期刊的 right to publish 签完了，所有作者的 signatures 全部凑齐，感觉心里一块石头落地了。"
-            },
-            "2026-03-10": {
-                type: "experiment", label: "[理论推导]", img: "https://placehold.co/220x130/0c0c0c/8bc34a?text=Trimer", title: "[氨气三聚体]",
-                desc: "死磕了很久氨气三聚体 (Ammonia Trimer) 的对称性破缺模型。弄懂原理的那一刻真的很有成就感，顺手画了个卡通示意图。"
-            },
-            "2026-03-02": {
-                type: "life", label: "[喜剧编写]", img: "https://placehold.co/220x130/0c0c0c/e91e63?text=Sketch", title: "[元旦晚会小品]",
-                desc: "今晚没跑数据，熬夜写了元旦派对的喜剧小品剧本。把咱们组研究生一天到晚焦头烂额的真实生活写成了旁白，边写边乐。"
-            },
-            "2026-01-07": {
-                type: "coding", label: "[Python分析]", img: "https://placehold.co/220x130/0c0c0c/ff9800?text=Python", title: "[代码调试日]",
-                desc: "今天用 Python 跑了一整天的数据分析和建模，帮着处理前期的实验结果。看着代码跑通的那一刻还是很爽的。"
-            },
-            "2025-12-29": {
-                type: "experiment", label: "[RABBITT]", img: "https://placehold.co/220x130/0c0c0c/8bc34a?text=RABBITT", title: "[实验收网]",
-                desc: "一氧化碳(CO)分子的 RABBITT 实验测量今天终于搞完了！接下来就是无尽的数据拟合和可视化工作了。"
-            }
-        };
-
-        /* 动态日历渲染引擎 (逻辑与 Group 页面完全一致) */
-        let currentDate = new Date(); 
-        const grid = document.getElementById('calendarGrid');
-        const display = document.getElementById('monthYearDisplay');
-
-        function renderCalendar(date) {
+        // 渲染引擎 (底层渲染逻辑不变，新增了 database 参数接收解密数据)
+        function renderCalendar(date, database) {
             const year = date.getFullYear();
             const month = date.getMonth(); 
-            
             display.innerText = `${year}.${String(month + 1).padStart(2, '0')}`;
             grid.innerHTML = ''; 
 
@@ -241,13 +145,11 @@
             firstDay = firstDay === 0 ? 6 : firstDay - 1; 
             const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-            for (let i = 0; i < firstDay; i++) {
-                grid.innerHTML += `<div class="calendar-day empty"></div>`;
-            }
+            for (let i = 0; i < firstDay; i++) { grid.innerHTML += `<div class="calendar-day empty"></div>`; }
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const event = diaryDatabase[dateString];
+                const event = database[dateString]; 
 
                 if (event) {
                     grid.innerHTML += `
@@ -260,22 +162,19 @@
                             </div>
                         </div>`;
                 } else {
-                    grid.innerHTML += `
-                        <div class="calendar-day">
-                            <div class="day-number">${String(day).padStart(2, '0')}</div>
-                        </div>`;
+                    grid.innerHTML += `<div class="calendar-day"><div class="day-number">${String(day).padStart(2, '0')}</div></div>`;
                 }
             }
         }
 
-        /* 按钮监听绑定 */
-        document.getElementById('prevMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(currentDate); });
-        document.getElementById('nextMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(currentDate); });
-        document.getElementById('prevYear').addEventListener('click', () => { currentDate.setFullYear(currentDate.getFullYear() - 1); renderCalendar(currentDate); });
-        document.getElementById('nextYear').addEventListener('click', () => { currentDate.setFullYear(currentDate.getFullYear() + 1); renderCalendar(currentDate); });
+        // 按钮监听 (带入解密后的 currentDatabase)
+        document.getElementById('prevMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(currentDate, currentDatabase); });
+        document.getElementById('nextMonth').addEventListener('click', () => { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(currentDate, currentDatabase); });
+        document.getElementById('prevYear').addEventListener('click', () => { currentDate.setFullYear(currentDate.getFullYear() - 1); renderCalendar(currentDate, currentDatabase); });
+        document.getElementById('nextYear').addEventListener('click', () => { currentDate.setFullYear(currentDate.getFullYear() + 1); renderCalendar(currentDate, currentDatabase); });
 
-        // 初始化渲染
-        renderCalendar(currentDate);
+        // 系统启动时，只渲染一个没有任何数据的空日历作为底层背景
+        renderCalendar(currentDate, {});
     </script>
 </body>
 </html>
