@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>系统操作员 :: 本地数据加密终端</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body style="background-color: #0c0c0c; color: #00ff41; font-family: monospace; padding: 40px;">
+    <h2>> 本地 AES-256 极客加密机</h2>
+    
+    <p>> 1. 将你的日记数据 (纯 JSON 格式) 粘贴到下方：</p>
+    <textarea id="rawData" style="width: 100%; height: 200px; background: #111; color: #00ff41; border: 1px solid #008f11; padding: 10px;"></textarea>
+
+    <p>> 2. 设定你的绝对访问密钥 (Password)：</p>
+    <input type="password" id="pwd" style="background: #111; color: #00ff41; border: 1px solid #008f11; padding: 5px;">
+    <button onclick="generateCipher()" style="background: #00ff41; color: #000; border: none; padding: 5px 15px; font-weight: bold; cursor: pointer;">[ 执行加密 ]</button>
+
+    <p>> 3. 提取终极密文 (复制下方乱码，替换到 diary.html 中)：</p>
+    <textarea id="cipherData" style="width: 100%; height: 150px; background: #111; color: #00bcd4; border: 1px dashed #00bcd4; padding: 10px;" readonly></textarea>
+
+    <script>
+        function generateCipher() {
+            const data = document.getElementById('rawData').value;
+            const pwd = document.getElementById('pwd').value;
+            if(!data || !pwd) { alert("数据和密码不能为空！"); return; }
+            // 核心：使用你输入的密码，对数据进行 AES 加密
+            const ciphertext = CryptoJS.AES.encrypt(data, pwd).toString();
+            document.getElementById('cipherData').value = ciphertext;
+        }
+    </script>
+</body>
+</html>
